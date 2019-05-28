@@ -14,7 +14,17 @@ function list(todos_list) {
     console.log(todos_list);
 }
 
-function done() {
+function done(todos, todo_id) {
+
+    for(let i = 0; i < todos.length; i++) {
+        let todo = todos[i];
+
+        if(todo.id === todo_id) {
+            todo.done = true;
+            break;
+        } 
+    }
+
     console.log("Marked as done");
 }
 
@@ -47,19 +57,25 @@ function remove(todos, remove_todo_id) {
 
 function main() {
     let todos = [
-        {id: 1, name: "Buy milk"},
-        {id: 2, name: "Buy cookies"},
-        {id: 13, name: "Clean the kitchen"}
+        {id: 1, name: "Buy milk", done: false},
+        {id: 2, name: "Buy cookies", done: false},
+        {id: 13, name: "Clean the kitchen", done: false}
     ];
+
+    console.log("XXX All arguments are:" );
+    console.log(process.argv);
 
     let command = process.argv.slice(2,3);
 
-    //console.log(command);
+    console.log(command);
 
     if(command == "") {
         list(todos);
     } else if(command == "done") {
-        done(); 
+        let todo_id = Number(process.argv.slice(3,4)[0]);
+
+        done(todos, todo_id); 
+        list(todos);
     } else if(command == "add") {
         let new_todo = process.argv.slice(3,4)[0];
         //console.log(new_todo);
